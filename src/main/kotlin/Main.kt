@@ -117,3 +117,65 @@ fun EstimatorApp() {
      // Instead of stuffing everything inside fun main(), we will create a dedicated function for our app's screen.
 
 
+
+
+
+// Application Shell
+// fun main() = application {
+//     Window(onCloseRequest = ::exitApplication, title = "Quantum Resource Estimator") {
+//         MaterialTheme {
+//             EstimatorApp()
+//         }
+//     }
+// }
+    // application { ... }: This tells Kotlin to start a background lifecycle for a desktop app.
+      //  It listens for system events like minimizing or closing.
+    // Window(...): This creates the actual physical window on your Windows 11 desktop. 
+        // onCloseRequest = ::exitApplication ensures that when you click the 'X' in the top right, the program fully shuts down in the background.
+    // MaterialTheme: This wraps your UI in Google's Material Design system, giving you access to standard fonts, colours, and shapes out of the box so you don't have to style everything from scratch.
+
+
+
+
+
+// Composable Function & State Management
+//   @Composable
+//   fun EstimatorApp() {
+//     var logicalQubitsFloat by remember { mutableFloatStateOf(4000f) }
+//     var physicalErrorRate by remember { mutableFloatStateOf(0.001f) }
+     // @Composable: This annotation transforms a standard Kotlin function into a UI generator. 
+          // It tells the compiler, "This function draws pixels on the screen."
+     // remember: This is Jetpack Compose's memory. 
+     //If you just used a normal variable (var x = 4000), every time the screen redrew itself, the variable would reset to 4000.
+       // remember tells the app to hold onto the user's changes across screen redraws.
+     // mutableFloatStateOf: This creates an active tracker. 
+         // When a user drags a slider, this value changes. 
+         // Compose is constantly watching this specific variable, and the millisecond it changes, Compose automatically redraws only the UI components that rely on it. 
+
+
+
+
+
+// Layouts and Modifiers
+
+  // Column(modifier = Modifier.padding(16.dp).fillMaxSize()) {
+     //Card(modifier = Modifier.fillMaxWidth()) {
+     
+     // Column: The foundational building block of Compose layouts. 
+      // It stacks everything inside it vertically. Without it, all your text and sliders would draw directly on top of each other in the top-left corner.
+     // Modifier: This is how you tweak a component's size, spacing, and behaviour.
+     // padding(16.dp) adds 16 density-independent pixels of breathing room inside the edges.
+     // fillMaxSize() tells the Column to stretch out and take up the entire desktop window.
+
+
+// Slider(
+//     value = logicalQubitsFloat,
+//     onValueChange = { newValue -> logicalQubitsFloat = newValue },
+//     valueRange = 10f..10000f
+// )
+  // value: Tells the slider where its drag handle should currently sit.
+  // onValueChange: This is a listener. As you drag the mouse, it rapidly fires, passing the new position as newValue.
+   //  We instantly push that newValue back into our logicalQubitsFloat state tracker. 
+   //This completes the loop, causing the screen to instantly redraw the new math results.
+  // valueRange: Sets the minimum and maximum boundaries for the slider track.
+  
